@@ -1,6 +1,7 @@
 ---
 include:
   - docassemble.AssemblyLine:assembly_line.yml
+  - docassemble.MassAccess:massaccess.yml
 ---
 metadata:
   title: >-
@@ -87,16 +88,15 @@ code: |
   nav.set_section("review_notice_of_filing_for_petition_to_se")
   user_role = "plaintiff"
   user_ask_role = "plaintiff"
-  users_name_first
-  landlords_name_last
-  landlords_address_line_two
+  docket_number
+  plaintiffs.gather()
+  landlords = defendants
+  defendants.gather()
+  trial_court.address.address
   set_progress(20)
   eviction_type
   file_date
-  trial_court.division
-  trial_court.department
   set_progress(40)
-  docket_number
   interview_order_notice_of_filing_for_petition_to_se = True
 ---
 ###################### Main order ######################
@@ -142,27 +142,6 @@ subquestion: |
 
   Most people take about 10 minutes to complete this interview.
 ---
-id: Screen one
-question: |
-  What is your name?
-fields:
-  - "First Name": users_name_first
-  - "Last Name": users_name_last
----
-id: Screen two
-question: |
-  What is the landlord's name?
-fields:
- - "Landlord's first name": landlords_name_first
- - "Landlord's last name": landlords_name_last
----
-id: Screen three
-question: |
-  What is the landlord's address?
-fields:
- - "Building number and Street": landlords_address_line_one 
- - "City, State, and ZIP Code": landlords_address_line_two
----
 id: Screen four
 question: |
   What type of eviction action was brought against you?
@@ -181,19 +160,6 @@ question: |
 fields:
   - "Date of Filing": file_date
     datatype: date
----
-id: Screen six
-question: |
-  What Court is your case in?
-fields:
-  - "Court Division": trial_court.department
-    input type: radio
-    choices:
-      - Superior Court
-      - District Court
-      - Housing Court
-      - Boston Municipal Court
-  - "Court Department (the specific court you are in, for example, Plymouth District Court)": trial_court.division
 ---
 id: preview notice_of_filing_for_petition_to_se
 question: |
